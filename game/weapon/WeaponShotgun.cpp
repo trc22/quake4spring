@@ -20,7 +20,7 @@ public:
 	void					PostSave			( void );
 
 protected:
-	int						hitscans;
+	int						projectiles;
 
 private:
 
@@ -48,7 +48,7 @@ rvWeaponShotgun::Spawn
 ================
 */
 void rvWeaponShotgun::Spawn( void ) {
-	hitscans   = spawnArgs.GetFloat( "hitscans" );
+	projectiles   = spawnArgs.GetFloat( "projectiles" );
 	
 	SetState( "Raise", 0 );	
 }
@@ -67,7 +67,7 @@ rvWeaponShotgun::Restore
 ================
 */
 void rvWeaponShotgun::Restore( idRestoreGame *savefile ) {
-	hitscans   = spawnArgs.GetFloat( "hitscans" );
+	projectiles   = spawnArgs.GetFloat( "projectiles" );
 }
 
 /*
@@ -164,7 +164,7 @@ stateResult_t rvWeaponShotgun::State_Fire( const stateParms_t& parms ) {
 	switch ( parms.stage ) {
 		case STAGE_INIT:
 			nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));
-			Attack( false, hitscans, spread, 0, 1.0f );
+			Attack( false, projectiles, spread, 0, 1.0f );
 			PlayAnim( ANIMCHANNEL_ALL, "fire", 0 );	
 			return SRESULT_STAGE( STAGE_WAIT );
 	
