@@ -18,6 +18,7 @@
 #include "Healing_Station.h"
 #include "ai/AI_Medic.h"
 
+
 // RAVEN BEGIN
 // nrausch: support for turning the weapon change ui on and off
 #ifdef _XENON
@@ -1342,6 +1343,11 @@ idPlayer::idPlayer() {
 	teamAmmoRegenPending	= false;
 	teamDoubler			= NULL;		
 	teamDoublerPending		= false;
+
+	//Tim C
+	slowMeter = 100;
+	slowMoActive = true;
+	decTimer = 5;
 }
 
 /*
@@ -9643,6 +9649,29 @@ void idPlayer::Think( void ) {
 		inBuyZone = false;
 
 	inBuyZonePrev = false;
+
+	//Tim C
+
+	if (slowMoActive && slowMeter != 0)
+	{
+
+		zoomFov.Init ( gameLocal.time, 100, CalcFov(true), 120 );
+		decTimer--;
+		if (decTimer == 0)
+		{
+			slowMeter --;
+			decTimer = 5;
+			gameLocal.Printf("slow mo active");
+
+		}
+
+	}
+	else
+	{
+		slowMoActive = false;
+		zoomFov.Init(gameLocal.time, 100, CalcFov(true), DefaultFov());
+	}
+
 }
 
 /*
