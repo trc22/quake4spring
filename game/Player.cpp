@@ -17,6 +17,7 @@
 #include "ai/AAS_tactical.h"
 #include "Healing_Station.h"
 #include "ai/AI_Medic.h"
+#include "physics\Physics_AF.h"
 
 
 // RAVEN BEGIN
@@ -1348,6 +1349,7 @@ idPlayer::idPlayer() {
 	slowMeter = 100;
 	slowMoActive = true;
 	decTimer = 5;
+	incTimer = 100;
 }
 
 /*
@@ -9651,10 +9653,10 @@ void idPlayer::Think( void ) {
 	inBuyZonePrev = false;
 
 	//Tim C
-
+	inventory.armor = slowMeter;
 	if (slowMoActive && slowMeter != 0)
 	{
-
+		af_timeScale.SetFloat(0.3f);
 		zoomFov.Init ( gameLocal.time, 100, CalcFov(true), 120 );
 		decTimer--;
 		if (decTimer == 0)
@@ -9670,6 +9672,11 @@ void idPlayer::Think( void ) {
 	{
 		slowMoActive = false;
 		zoomFov.Init(gameLocal.time, 100, CalcFov(true), DefaultFov());
+
+		if (slowMeter < 100)
+		{
+			//incTimer
+		}
 	}
 
 }
