@@ -9675,7 +9675,14 @@ void idPlayer::Think( void ) {
 
 		if (slowMeter < 100)
 		{
-			//incTimer
+			incTimer++;
+			if (incTimer == 0)
+			{
+				slowMeter++;
+				incTimer = 100;
+				gameLocal.Printf("slow mo active");
+
+			}
 		}
 	}
 

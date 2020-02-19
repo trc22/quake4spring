@@ -308,6 +308,7 @@ public:
 	int						slowMeter;
 	bool					slowMoActive;
 	int						decTimer;
+	int						incTimer;
 
 	struct playerFlags_s {
 		bool		forward			:1;
