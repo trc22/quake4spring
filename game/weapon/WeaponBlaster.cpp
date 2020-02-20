@@ -356,7 +356,7 @@ stateResult_t rvWeaponBlaster::State_Charge ( const stateParms_t& parms ) {
 				
 				return SRESULT_WAIT;
 			} 
-			SetState ( "Charged", 4 );
+			SetState ( "Charged", 4 ); //Tim C
 			return SRESULT_DONE;
 	}
 	return SRESULT_ERROR;	
@@ -374,7 +374,7 @@ stateResult_t rvWeaponBlaster::State_Charged ( const stateParms_t& parms ) {
 	};	
 	switch ( parms.stage ) {
 		case CHARGED_INIT:		
-			viewModel->SetShaderParm ( BLASTER_SPARM_CHARGEGLOW, 1.0f  );
+			//viewModel->SetShaderParm ( BLASTER_SPARM_CHARGEGLOW, 1.0f  ); Tim C
 
 			StopSound ( SND_CHANNEL_ITEM, false );
 			StartSound ( "snd_charge_loop", SND_CHANNEL_ITEM, 0, false, NULL );
