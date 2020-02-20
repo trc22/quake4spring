@@ -8558,7 +8558,12 @@ void idPlayer::PerformImpulse( int impulse ) {
    			}
    			break;
    		}
-				
+				//Tim C
+		
+		case IMPULSE_23: {
+			slowMoActive = true;
+			break;
+		}
 		case IMPULSE_28: {
  			if ( gameLocal.isClient || entityNumber == gameLocal.localClientNum ) {
  				gameLocal.mpGame.CastVote( gameLocal.localClientNum, true );
