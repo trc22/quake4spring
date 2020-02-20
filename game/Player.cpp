@@ -9663,7 +9663,6 @@ void idPlayer::Think( void ) {
 		{
 			slowMeter --;
 			decTimer = 5;
-			gameLocal.Printf("slow mo active");
 
 		}
 
@@ -9675,13 +9674,11 @@ void idPlayer::Think( void ) {
 
 		if (slowMeter < 100)
 		{
-			incTimer++;
+			incTimer--;
 			if (incTimer == 0)
 			{
 				slowMeter++;
 				incTimer = 100;
-				gameLocal.Printf("slow mo active");
-
 			}
 		}
 	}
