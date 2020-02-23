@@ -1347,8 +1347,8 @@ idPlayer::idPlayer() {
 
 	//Tim C
 	slowMeter = 100;
-	slowMoActive = true;
-	decTimer = 5;
+	slowMoActive = false;
+	decTimer = 10;
 	incTimer = 100;
 }
 
@@ -8560,9 +8560,18 @@ void idPlayer::PerformImpulse( int impulse ) {
    		}
 				//Tim C
 		
-		case IMPULSE_23: {
-			slowMoActive = true;
-			break;
+		case IMPULSE_23: 
+		{
+			if (slowMoActive)
+			{
+				 slowMoActive = false;
+				  break;
+			}
+			else
+			{
+				slowMoActive = true;
+				break;
+			}
 		}
 		case IMPULSE_28: {
  			if ( gameLocal.isClient || entityNumber == gameLocal.localClientNum ) {
@@ -9661,13 +9670,14 @@ void idPlayer::Think( void ) {
 	inventory.armor = slowMeter;
 	if (slowMoActive && slowMeter != 0)
 	{
-		af_timeScale.SetFloat(0.3f);
 		zoomFov.Init ( gameLocal.time, 100, CalcFov(true), 120 );
+		af.GetPhysics()->SetTimeScale(0.3);
+
 		decTimer--;
 		if (decTimer == 0)
 		{
 			slowMeter --;
-			decTimer = 5;
+			decTimer = 10;
 
 		}
 
@@ -10058,16 +10068,16 @@ void idPlayer::CalcDamagePoints( idEntity *inflictor, idEntity *attacker, const 
  		armor_protection = ( gameLocal.isMultiplayer ) ? g_armorProtectionMP.GetFloat() : g_armorProtection.GetFloat();
 		armorSave = ceil( damage * armor_protection );
 		if ( armorSave >= inventory.armor ) {
-			armorSave = inventory.armor;
+			//armorSave = inventory.armor;
 		}
 
  		if ( !damage ) {
  			armorSave = 0;
  		} else if ( armorSave >= damage ) {
- 			armorSave = damage - 1;
- 			damage = 1;
+ 		//	armorSave = damage - 1;
+ 		//	damage = 1;
  		} else {
- 			damage -= armorSave;
+ 		//	damage -= armorSave;
  		}
 	} else {
 		armorSave = 0;
