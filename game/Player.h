@@ -586,7 +586,8 @@ public:
 	void					ShowCrosshair				( void );
 	void					HideCrosshair				( void );
 // RAVEN END
-
+//Tim C
+	bool					getSlowMoActive				( bool )		{ return slowMoActive; }
 //RAVEN BEGIN
 //asalmon: switch weapon based on d-pad combo
 #ifdef _XBOX
