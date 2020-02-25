@@ -425,6 +425,9 @@ public:
 	float					buyMenuCash;
 // RITUAL END
 
+	//Tim C
+	bool						secondJump;
+
 public:
 	CLASS_PROTOTYPE( idPlayer );
 

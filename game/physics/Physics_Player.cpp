@@ -1615,6 +1615,31 @@ bool idPhysics_Player::HasJumped( void ) const {
 	return ( ( current.movementFlags & PMF_JUMPED ) != 0 );
 }
 
+//Tim C
+/*
+================
+idPhysics_Player::resetJump
+================
+*/
+void idPhysics_Player::resetJump(void)  {
+	idVec3 addVelocity;
+	current.movementFlags -= PMF_JUMP_HELD;
+	current.movementFlags -= PMF_JUMPED;
+	addVelocity = 2.0f * maxJumpHeight * -gravityVector;
+	addVelocity *= idMath::Sqrt(addVelocity.Normalize());
+	current.velocity += addVelocity;
+}
+
+/*
+================
+idPhysics_Player::playerDive
+================
+*/
+void idPhysics_Player::playerDive(void)  {
+	current.velocity = 500 * viewForward - 350.0f * gravityNormal;
+}
+
+
 /*
 ================
 idPhysics_Player::HasSteppedUp

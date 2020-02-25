@@ -1497,6 +1497,8 @@ idPlayer::Init
 */
 void idPlayer::Init( void ) {
 	const char			*value;
+	//Tim C
+	secondJump = false;
 	
 	noclip					= false;
 	godmode					= false;
@@ -8550,7 +8552,19 @@ void idPlayer::PerformImpulse( int impulse ) {
    			}
    			break;
    		}
-				
+		//Tim C
+		case IMPULSE_24:
+		{
+						   secondJump = true;
+						   break;
+		}
+
+		case IMPULSE_25:
+		{
+						   physicsObj.playerDive();
+						   break;
+		}
+
 		case IMPULSE_28: {
  			if ( gameLocal.isClient || entityNumber == gameLocal.localClientNum ) {
  				gameLocal.mpGame.CastVote( gameLocal.localClientNum, true );
@@ -9643,6 +9657,16 @@ void idPlayer::Think( void ) {
 		inBuyZone = false;
 
 	inBuyZonePrev = false;
+
+	//Tim C
+	if (pfl.jump == physicsObj.HasJumped() && secondJump)
+	{
+		physicsObj.resetJump();
+		pfl.onGround = 0;
+		pfl.jump = 0;
+		
+	}
+	secondJump = false;
 }
 
 /*
