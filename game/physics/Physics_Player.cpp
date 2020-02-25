@@ -1657,11 +1657,26 @@ void idPhysics_Player::playerDive(void)  {
 
 /*
 ================
-idPhysics_Player::playerDodge
+idPhysics_Player::playerDodgeLeft
 ================
 */
-void idPhysics_Player::playerDodge(void)  {
-	if (dodgeTimer == 100)
+void idPhysics_Player::playerDodgeLeft(void)  {
+	if (dodgeTimer == 25)
+	{
+		groundPlane = false;		// jumping away
+		walking = false;
+		current.velocity = 600 * -viewRight - 75.0f * gravityNormal;
+		dodgeTimer = 0;
+	}
+}
+
+/*
+================
+idPhysics_Player::playerDodgeRight
+================
+*/
+void idPhysics_Player::playerDodgeRight(void)  {
+	if (dodgeTimer == 25)
 	{
 		groundPlane = false;		// jumping away
 		walking = false;
@@ -1676,7 +1691,7 @@ idPhysics_Player::updateDodgeTimer
 ================
 */
 void idPhysics_Player::updateDodgeTimer(void)  {
-	if (dodgeTimer < 100)
+	if (dodgeTimer < 25)
 	{
 		dodgeTimer++;
 	}

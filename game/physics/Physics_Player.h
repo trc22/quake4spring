@@ -76,7 +76,8 @@ public:
 	//Tim C
 	void					resetJump(void);
 	void					playerDive(void);
-	void					playerDodge(void);
+	void					playerDodgeLeft(void);
+	void					playerDodgeRight(void);
 	void					updateDodgeTimer(void);
 	//Tim C end
 	bool					HasSteppedUp( void ) const;

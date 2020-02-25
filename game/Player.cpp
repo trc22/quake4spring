@@ -8566,7 +8566,13 @@ void idPlayer::PerformImpulse( int impulse ) {
 
 		case IMPULSE_26:
 		{
-						   physicsObj.playerDodge();
+						   physicsObj.playerDodgeLeft();
+						   break;
+		}
+
+		case IMPULSE_27:
+		{
+						   physicsObj.playerDodgeRight();
 						   break;
 		}
 
