@@ -1645,10 +1645,12 @@ idPhysics_Player::playerDive
 void idPhysics_Player::playerDive(void)  {
 	if (groundPlane)
 	{
-		current.velocity = 500 * viewForward - 350.0f * gravityNormal;
-		groundPlane = false;		// jumping away
+		current.velocity = 600 * viewForward - 250.0f * gravityNormal;
+		groundPlane = false;		
 		walking = false;
 		current.movementFlags |= PMF_JUMP_HELD | PMF_JUMPED;
+		current.crouchSlideTime = 5000;
+
 	}
 }
 
