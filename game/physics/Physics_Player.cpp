@@ -44,6 +44,8 @@ const int PMF_TIME_WATERJUMP	= 128;		// movementTime is waterjump
 const int PMF_ALL_TIMES			= (PMF_TIME_WATERJUMP|PMF_TIME_LAND|PMF_TIME_KNOCKBACK);
 
 int c_pmove = 0;
+//Tim C
+int jumpCount = 0;
 
 float idPhysics_Player::Pm_Accelerate( void ) {
 	return gameLocal.IsMultiplayer() ? PM_ACCELERATE_MP : PM_ACCELERATE_SP;
@@ -1318,7 +1320,7 @@ bool idPhysics_Player::CheckWaterJump( void ) {
 	if ( current.movementTime ) {
 		return false;
 	}
-
+	
 	// check for water jump
 	if ( waterLevel != WATERLEVEL_WAIST ) {
 		return false;
@@ -1623,20 +1625,31 @@ idPhysics_Player::resetJump
 */
 void idPhysics_Player::resetJump(void)  {
 	idVec3 addVelocity;
-	current.movementFlags -= PMF_JUMP_HELD;
-	current.movementFlags -= PMF_JUMPED;
-	addVelocity = 2.0f * maxJumpHeight * -gravityVector;
-	addVelocity *= idMath::Sqrt(addVelocity.Normalize());
-	current.velocity += addVelocity;
+	if (jumpCount == 0)
+	{
+		addVelocity = 2.0f * maxJumpHeight * -gravityVector;
+		addVelocity *= idMath::Sqrt(addVelocity.Normalize());
+		current.velocity += addVelocity;
+	}
+	jumpCount++;
+	if (groundPlane)
+	{
+		jumpCount = 0;
+	}
 }
-
 /*
 ================
 idPhysics_Player::playerDive
 ================
 */
 void idPhysics_Player::playerDive(void)  {
-	current.velocity = 500 * viewForward - 350.0f * gravityNormal;
+	if (groundPlane)
+	{
+		current.velocity = 500 * viewForward - 350.0f * gravityNormal;
+		groundPlane = false;		// jumping away
+		walking = false;
+		current.movementFlags |= PMF_JUMP_HELD | PMF_JUMPED;
+	}
 }
 
 
