@@ -118,7 +118,6 @@ const idEventDef EV_Player_DisableObjectives( "disableObjectives" );
 const idEventDef EV_Player_AllowNewObjectives( "<allownewobjectives>" );
 
 // RAVEN END
-
 CLASS_DECLARATION( idActor, idPlayer )
 //	EVENT( EV_Player_HideDatabaseEntry,		idPlayer::Event_HideDatabaseEntry )
 	EVENT( EV_Player_ZoomIn,				idPlayer::Event_ZoomIn )
@@ -8565,6 +8564,12 @@ void idPlayer::PerformImpulse( int impulse ) {
 						   break;
 		}
 
+		case IMPULSE_26:
+		{
+						   physicsObj.playerDodge();
+						   break;
+		}
+
 		case IMPULSE_28: {
  			if ( gameLocal.isClient || entityNumber == gameLocal.localClientNum ) {
  				gameLocal.mpGame.CastVote( gameLocal.localClientNum, true );
@@ -9667,6 +9672,7 @@ void idPlayer::Think( void ) {
 		
 	}
 	secondJump = false;
+	physicsObj.updateDodgeTimer();
 }
 
 /*
