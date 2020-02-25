@@ -76,6 +76,9 @@ public:
 	//Tim C
 	void					resetJump(void);
 	void					playerDive(void);
+	void					playerDodge(void);
+	void					updateDodgeTimer(void);
+	//Tim C end
 	bool					HasSteppedUp( void ) const;
 	float					GetStepUp( void ) const;
 	bool					IsCrouching( void ) const;
