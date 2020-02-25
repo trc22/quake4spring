@@ -1348,7 +1348,7 @@ idPlayer::idPlayer() {
 	//Tim C
 	slowMeter = 100;
 	slowMoActive = false;
-	decTimer = 10;
+	decTimer = 1;
 	incTimer = 100;
 }
 
@@ -9671,16 +9671,12 @@ void idPlayer::Think( void ) {
 	if (slowMoActive && slowMeter != 0)
 	{
 		zoomFov.Init ( gameLocal.time, 100, CalcFov(true), 120 );
-		//af.GetPhysics()->SetTimeScale(0.3);
 		timescale.SetFloat(0.3f);
-		//af_timeScale.SetInteger()
-
 		decTimer--;
 		if (decTimer == 0)
 		{
 			slowMeter --;
-			decTimer = 10;
-
+			decTimer = 1;
 		}
 
 	}
