@@ -46,6 +46,7 @@ const int PMF_ALL_TIMES			= (PMF_TIME_WATERJUMP|PMF_TIME_LAND|PMF_TIME_KNOCKBACK
 int c_pmove = 0;
 //Tim C
 int jumpCount = 0;
+int dodgeTimer = 0;
 
 float idPhysics_Player::Pm_Accelerate( void ) {
 	return gameLocal.IsMultiplayer() ? PM_ACCELERATE_MP : PM_ACCELERATE_SP;
@@ -1654,7 +1655,34 @@ void idPhysics_Player::playerDive(void)  {
 	}
 }
 
+/*
+================
+idPhysics_Player::playerDodge
+================
+*/
+void idPhysics_Player::playerDodge(void)  {
+	if (dodgeTimer == 100)
+	{
+		groundPlane = false;		// jumping away
+		walking = false;
+		current.velocity = 600 * viewRight - 75.0f * gravityNormal;
+		dodgeTimer = 0;
+	}
+}
 
+/*
+================
+idPhysics_Player::updateDodgeTimer
+================
+*/
+void idPhysics_Player::updateDodgeTimer(void)  {
+	if (dodgeTimer < 100)
+	{
+		dodgeTimer++;
+	}
+}
+
+//TC end
 /*
 ================
 idPhysics_Player::HasSteppedUp
