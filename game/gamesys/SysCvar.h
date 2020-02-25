@@ -171,6 +171,8 @@ extern idCVar	af_forceFriction;
 extern idCVar	af_maxLinearVelocity;
 extern idCVar	af_maxAngularVelocity;
 extern idCVar	af_timeScale;
+//Tim C
+extern idCVar   timescale;
 extern idCVar	af_jointFrictionScale;
 extern idCVar	af_contactFrictionScale;
 extern idCVar	af_highlightBody;
