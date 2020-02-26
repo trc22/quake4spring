@@ -2703,6 +2703,13 @@ bool idActor::Pain( idEntity *inflictor, idEntity *attacker, int damage, const i
 	// set the pain anim
 	idStr damageGroup = GetDamageGroup( location );
 
+	//Tim C
+	gameLocal.Printf("Damage: joint: '%s' \n", animator.GetJointName((jointHandle_t)location));
+
+//		if (animator.GetJointName((jointHandle_t)location) == animator.GetJointName((jointHandle_t)0))
+
+
+	
 	painAnim.Clear ( );
 
 	// If we have both a damage group and a pain type then check that combination first
