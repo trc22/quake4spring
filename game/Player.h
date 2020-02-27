@@ -427,6 +427,7 @@ public:
 
 	//Tim C
 	bool						secondJump;
+	bool						sprintOn;
 
 public:
 	CLASS_PROTOTYPE( idPlayer );

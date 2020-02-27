@@ -47,6 +47,9 @@ int c_pmove = 0;
 //Tim C
 int jumpCount = 0;
 int dodgeTimer = 0;
+int playerEnergy = 100;
+int energyTimer = 0;
+bool sprintActive = false;
 
 float idPhysics_Player::Pm_Accelerate( void ) {
 	return gameLocal.IsMultiplayer() ? PM_ACCELERATE_MP : PM_ACCELERATE_SP;
@@ -1697,6 +1700,53 @@ void idPhysics_Player::updateDodgeTimer(void)  {
 	}
 }
 
+/*
+================
+idPhysics_Player::playerSprint
+================
+*/
+void idPhysics_Player::playerSprint(void)  {
+	if (playerEnergy > 20)
+	{
+		sprintActive = true;
+		pm_speed.SetFloat(400);
+		updatePlayerEnergy();
+	}
+	else
+	{
+		sprintActive = false;
+		pm_speed.SetFloat(160);
+		updatePlayerEnergy();
+	}
+}
+
+/*
+================
+idPhysics_Player::updatePlayerEnergy
+================
+*/
+void idPhysics_Player::updatePlayerEnergy(void)  {
+	if (sprintActive)
+	{
+		energyTimer++;
+		if (energyTimer == 5)
+		{
+			playerEnergy -= 2;
+			energyTimer = 0;
+		}
+	}
+	else if (playerEnergy < 200)
+	{
+		energyTimer++;
+		if (energyTimer == 5)
+		{
+			playerEnergy++;
+			energyTimer = 0;
+		}
+
+	}
+
+}
 //TC end
 /*
 ================

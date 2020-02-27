@@ -79,6 +79,8 @@ public:
 	void					playerDodgeLeft(void);
 	void					playerDodgeRight(void);
 	void					updateDodgeTimer(void);
+	void					playerSprint(void);
+	void					updatePlayerEnergy(void);
 	//Tim C end
 	bool					HasSteppedUp( void ) const;
 	float					GetStepUp( void ) const;

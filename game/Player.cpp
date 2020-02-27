@@ -1498,6 +1498,8 @@ void idPlayer::Init( void ) {
 	const char			*value;
 	//Tim C
 	secondJump = false;
+	sprintOn = false;
+	
 	
 	noclip					= false;
 	godmode					= false;
@@ -8592,6 +8594,11 @@ void idPlayer::PerformImpulse( int impulse ) {
 			idFuncRadioChatter::RepeatLast();
 			break;
 		}
+			//Tim C
+		case IMPULSE_52: {
+			sprintOn = true;
+			break;
+		}
 
 // RITUAL BEGIN
 // squirrel: Mode-agnostic buymenus
@@ -9679,6 +9686,12 @@ void idPlayer::Think( void ) {
 	}
 	secondJump = false;
 	physicsObj.updateDodgeTimer();
+	physicsObj.updatePlayerEnergy();
+	if (sprintOn)
+	{
+		physicsObj.playerSprint();
+	}
+
 }
 
 /*
