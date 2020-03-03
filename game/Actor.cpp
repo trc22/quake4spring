@@ -2709,7 +2709,7 @@ bool idActor::Pain( idEntity *inflictor, idEntity *attacker, int damage, const i
 			animator.GetJointName((jointHandle_t)location) == animator.GetJointName((jointHandle_t)11) ||
 			animator.GetJointName((jointHandle_t)location) == animator.GetJointName((jointHandle_t)17))
 		{
-			Damage(inflictor, attacker, vec3_origin, "damage_blaster", 10.0, location);
+			Damage(inflictor, attacker, vec3_origin, "damage_blaster", 1.3, location);
 			if (attacker->IsType(idPlayer::GetClassType()))
 				gameLocal.Printf("Body shot ('%s') \n", animator.GetJointName((jointHandle_t)location));
 		}
@@ -2717,7 +2717,7 @@ bool idActor::Pain( idEntity *inflictor, idEntity *attacker, int damage, const i
 		if (animator.GetJointName((jointHandle_t)location) == animator.GetJointName((jointHandle_t)38) ||
 			animator.GetJointName((jointHandle_t)location) == animator.GetJointName((jointHandle_t)32))
 		{
-			Damage(inflictor, attacker, vec3_origin, "damage_blaster", 10.0, location);
+			Damage(inflictor, attacker, vec3_origin, "damage_blaster", 1.5, location);
 			if (attacker->IsType(idPlayer::GetClassType()))
 				gameLocal.Printf("Neck shot ('%s') \n", animator.GetJointName((jointHandle_t)location));
 		}
@@ -2726,7 +2726,7 @@ bool idActor::Pain( idEntity *inflictor, idEntity *attacker, int damage, const i
 			animator.GetJointName((jointHandle_t)location) == animator.GetJointName((jointHandle_t)1) ||
 			animator.GetJointName((jointHandle_t)location) == animator.GetJointName((jointHandle_t)2))
 		{
-			Damage(inflictor, attacker, vec3_origin, "damage_blaster", 10.0, location);
+			Damage(inflictor, attacker, vec3_origin, "damage_blaster", .5, location);
 			if (attacker->IsType(idPlayer::GetClassType()))
 				gameLocal.Printf("Left leg shot ('%s') \n", animator.GetJointName((jointHandle_t)location));
 		}
@@ -2735,16 +2735,17 @@ bool idActor::Pain( idEntity *inflictor, idEntity *attacker, int damage, const i
 			animator.GetJointName((jointHandle_t)location) == animator.GetJointName((jointHandle_t)10) ||
 			animator.GetJointName((jointHandle_t)location) == animator.GetJointName((jointHandle_t)9))
 		{
-			Damage(inflictor, attacker, vec3_origin, "damage_blaster", 10.0, location);
+			Damage(inflictor, attacker, vec3_origin, "damage_blaster", .5, location);
 			if (attacker->IsType(idPlayer::GetClassType()))
 				gameLocal.Printf("Right leg shot ('%s') \n", animator.GetJointName((jointHandle_t)location));
 		}
 
 		//Left arm shot:
 		if (animator.GetJointName((jointHandle_t)location) == animator.GetJointName((jointHandle_t)22) ||
-			animator.GetJointName((jointHandle_t)location) == animator.GetJointName((jointHandle_t)16))
+			animator.GetJointName((jointHandle_t)location) == animator.GetJointName((jointHandle_t)24)
+			animator.GetJointName((jointHandle_t)location) == animator.GetJointName((jointHandle_t)26))
 		{
-			Damage(inflictor, attacker, vec3_origin, "damage_blaster", 10.0, location);
+			Damage(inflictor, attacker, vec3_origin, "damage_blaster", .7, location);
 			if (attacker->IsType(idPlayer::GetClassType()))
 				gameLocal.Printf("Left arm shot ('%s') \n", animator.GetJointName((jointHandle_t)location));
 		}
@@ -2753,12 +2754,12 @@ bool idActor::Pain( idEntity *inflictor, idEntity *attacker, int damage, const i
 			animator.GetJointName((jointHandle_t)location) == animator.GetJointName((jointHandle_t)69) ||
 			animator.GetJointName((jointHandle_t)location) == animator.GetJointName((jointHandle_t)67))
 		{
-			Damage(inflictor, attacker, vec3_origin, "damage_blaster", 10.0, location);
+			Damage(inflictor, attacker, vec3_origin, "damage_blaster", .7, location);
 			if (attacker->IsType(idPlayer::GetClassType()))
 				gameLocal.Printf("Right arm shot ('%s') \n", animator.GetJointName((jointHandle_t)location));
 		}
 		//Headshot:
-		if (animator.GetJointName((jointHandle_t)location) == animator.GetJointName((jointHandle_t)36))
+		if (animator.GetJointName((jointHandle_t)location) == animator.GetJointName((jointHandle_t)40))
 		{
 			Damage(inflictor, attacker, vec3_origin, "damage_blaster", 10.0, location);
 			if (attacker->IsType(idPlayer::GetClassType()))
@@ -2767,7 +2768,7 @@ bool idActor::Pain( idEntity *inflictor, idEntity *attacker, int damage, const i
 		//Shoulder shot:
 		if (animator.GetJointName((jointHandle_t)location) == animator.GetJointName((jointHandle_t)15))
 		{
-			Damage(inflictor, attacker, vec3_origin, "damage_blaster", 10.0, location);
+			Damage(inflictor, attacker, vec3_origin, "damage_blaster", .7, location);
 			if (attacker->IsType(idPlayer::GetClassType()))
 				gameLocal.Printf("Shoulder shot ('%s') \n", animator.GetJointName((jointHandle_t)location));
 		}
