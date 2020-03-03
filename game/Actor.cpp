@@ -2742,7 +2742,7 @@ bool idActor::Pain( idEntity *inflictor, idEntity *attacker, int damage, const i
 
 		//Left arm shot:
 		if (animator.GetJointName((jointHandle_t)location) == animator.GetJointName((jointHandle_t)22) ||
-			animator.GetJointName((jointHandle_t)location) == animator.GetJointName((jointHandle_t)24)
+			animator.GetJointName((jointHandle_t)location) == animator.GetJointName((jointHandle_t)24) ||
 			animator.GetJointName((jointHandle_t)location) == animator.GetJointName((jointHandle_t)26))
 		{
 			Damage(inflictor, attacker, vec3_origin, "damage_blaster", .7, location);
