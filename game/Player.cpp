@@ -1350,6 +1350,8 @@ idPlayer::idPlayer() {
 	slowMoActive = false;
 	decTimer = 1;
 	incTimer = 100;
+	fxTimer = 500;
+	pillsActive = false;
 }
 
 /*
@@ -4244,6 +4246,10 @@ bool idPlayer::GiveItem( idItem *item ) {
 	arg = item->spawnArgs.MatchPrefix( "inv_health", NULL );
 	if ( arg && hud ) {
 		hud->HandleNamedEvent( "healthPulse" );
+	}
+	//Tim C
+	if (arg){
+		setPills();
 	}
 	arg = item->spawnArgs.MatchPrefix( "inv_weapon", NULL );
 	if ( arg && hud ) {
@@ -8561,7 +8567,7 @@ void idPlayer::PerformImpulse( int impulse ) {
 				//Tim C
 		
 		case IMPULSE_23: 
-		{
+		{	setPills();
 			if (slowMoActive)
 			{
 				 slowMoActive = false;
@@ -9696,6 +9702,19 @@ void idPlayer::Think( void ) {
 		}
 	}
 
+	if (pillsActive)
+	{
+		playerView.SetDoubleVisionParms(12, 2);
+		playerView.SetTunnelParms(10, 1);
+		fxTimer--;
+		if (fxTimer == 0)
+		{
+			pillsActive = false;
+			playerView.ClearEffects();
+			fxTimer = 500;
+			zoomFov.Init(gameLocal.time, 100, CalcFov(true), DefaultFov());
+		}
+	}
 }
 
 /*
@@ -14128,6 +14147,12 @@ int idPlayer::CanSelectWeapon(const char* weaponName)
 	}
 
 	return weaponNum;
+}
+
+//Tim C
+void idPlayer::setPills(void)
+{
+	pillsActive = true;
 }
 
 // RITUAL END

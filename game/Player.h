@@ -309,6 +309,8 @@ public:
 	bool					slowMoActive;
 	int						decTimer;
 	int						incTimer;
+	int						fxTimer;
+	bool					pillsActive;
 
 	struct playerFlags_s {
 		bool		forward			:1;
@@ -588,6 +590,7 @@ public:
 // RAVEN END
 //Tim C
 	bool					getSlowMoActive				( bool )		{ return slowMoActive; }
+	void					setPills					( void );
 //RAVEN BEGIN
 //asalmon: switch weapon based on d-pad combo
 #ifdef _XBOX
