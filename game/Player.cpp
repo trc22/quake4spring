@@ -9712,7 +9712,6 @@ void idPlayer::Think( void ) {
 			pillsActive = false;
 			playerView.ClearEffects();
 			fxTimer = 500;
-			zoomFov.Init(gameLocal.time, 100, CalcFov(true), DefaultFov());
 		}
 	}
 }
