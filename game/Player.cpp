@@ -8498,18 +8498,17 @@ void idPlayer::PerformImpulse( int impulse ) {
 			}
 			break;
 		}
+		//Tim C
 		case IMPULSE_16: {
-			 if (pm_crouchheight.GetFloat() == 38)
+			 if (pm_crouchheight.GetFloat() == 38 && pfl.crouch)
 			 {
-				 gameLocal.Printf("Prone enabled");
-				 pm_crouchheight.SetFloat(20);
-				 pm_crouchviewheight.SetFloat(14);
-				 pm_crouchspeed.SetFloat(75);
+				 pm_crouchheight.SetFloat(18);
+				 pm_crouchviewheight.SetFloat(12);
+				 pm_crouchspeed.SetFloat(50);
 				 break;
 			 }
 			 else
 			 {
-				 gameLocal.Printf("Prone disabled");
 				 pm_crouchheight.SetFloat(38);
 				 pm_crouchviewheight.SetFloat(32);
 				 pm_crouchspeed.SetFloat(100);
@@ -9709,6 +9708,12 @@ void idPlayer::Think( void ) {
 	if (sprintOn)
 	{
 		physicsObj.playerSprint();
+	}
+	if (!pfl.crouch &&  pm_crouchheight.GetFloat() == 18)
+	{
+		pm_crouchheight.SetFloat(38);
+		pm_crouchviewheight.SetFloat(32);
+		pm_crouchspeed.SetFloat(100);
 	}
 
 }
