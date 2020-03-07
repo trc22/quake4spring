@@ -30,7 +30,9 @@
 #endif
 // RAVEN END
 
-
+//Tim C
+idRandom powerUpGenerator;
+int randomInt;
 
 
 idCVar net_predictionErrorDecay( "net_predictionErrorDecay", "112", CVAR_FLOAT | CVAR_GAME | CVAR_NOCHEAT, "time in milliseconds it takes to fade away prediction errors", 0.0f, 200.0f );
@@ -4238,10 +4240,17 @@ bool idPlayer::GiveItem( idItem *item ) {
 	} else {
 		gave = true;
 	}
-
+	//Tim C
 	arg = item->spawnArgs.MatchPrefix( "inv_ammo_", NULL );
 	if ( arg && hud ) {
 		hud->HandleNamedEvent( "ammoPulse" );
+	}
+	if (arg)
+	{
+		randomInt = powerUpGenerator.RandomInt(8);
+		PowerUpModifier(randomInt);
+		randomInt = powerUpGenerator.RandomInt(3);
+		inventory.GivePowerUp(this, randomInt, 5000);
 	}
 	arg = item->spawnArgs.MatchPrefix( "inv_health", NULL );
 	if ( arg && hud ) {
@@ -4264,6 +4273,11 @@ bool idPlayer::GiveItem( idItem *item ) {
 			UpdateHudWeapon( weapon );
 		}
 		hud->HandleNamedEvent( "weaponPulse" );
+	}
+	if (arg)
+	{
+		randomInt = powerUpGenerator.RandomInt(3);
+		inventory.GivePowerUp(this, randomInt, 8000);
 	}
 	arg = item->spawnArgs.MatchPrefix( "inv_armor", NULL );
 	if ( arg && hud ) {
@@ -8567,7 +8581,7 @@ void idPlayer::PerformImpulse( int impulse ) {
 				//Tim C
 		
 		case IMPULSE_23: 
-		{	setPills();
+		{	
 			if (slowMoActive)
 			{
 				 slowMoActive = false;
