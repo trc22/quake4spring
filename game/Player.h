@@ -596,6 +596,7 @@ public:
 //Tim C
 	bool					getSlowMoActive				( bool )		{ return slowMoActive; }
 	void					setPills					( void );
+	void					slowMeterMod				( int  );
 //RAVEN BEGIN
 //asalmon: switch weapon based on d-pad combo
 #ifdef _XBOX

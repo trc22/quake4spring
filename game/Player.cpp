@@ -9799,6 +9799,10 @@ void idPlayer::Think( void ) {
 		pm_crouchviewheight.SetFloat(32);
 		pm_crouchspeed.SetFloat(100);
 	}
+	if (slowMeter > 100)
+	{
+		slowMeter = 100;
+	}
 
 }
 
@@ -14238,6 +14242,11 @@ int idPlayer::CanSelectWeapon(const char* weaponName)
 void idPlayer::setPills(void)
 {
 	pillsActive = true;
+}
+
+void idPlayer::slowMeterMod(int i)
+{
+	slowMeter += i;
 }
 
 // RITUAL END
