@@ -9781,7 +9781,6 @@ void idPlayer::Think( void ) {
 	}
 	if (pfl.jump == physicsObj.HasJumped() && secondJump)
 	{
-		physicsObj.resetJump();
 		pfl.onGround = 0;
 		pfl.jump = 0;
 		
