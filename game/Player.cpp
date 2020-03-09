@@ -122,7 +122,6 @@ const idEventDef EV_Player_DisableObjectives( "disableObjectives" );
 const idEventDef EV_Player_AllowNewObjectives( "<allownewobjectives>" );
 
 // RAVEN END
-
 CLASS_DECLARATION( idActor, idPlayer )
 //	EVENT( EV_Player_HideDatabaseEntry,		idPlayer::Event_HideDatabaseEntry )
 	EVENT( EV_Player_ZoomIn,				idPlayer::Event_ZoomIn )
@@ -1509,6 +1508,11 @@ idPlayer::Init
 */
 void idPlayer::Init( void ) {
 	const char			*value;
+	//Tim C
+	secondJump = false;
+	sprintOn = false;
+	proneOn = false;
+	
 	
 	noclip					= false;
 	godmode					= false;
@@ -8522,6 +8526,23 @@ void idPlayer::PerformImpulse( int impulse ) {
 			}
 			break;
 		}
+		//Tim C
+		case IMPULSE_16: {
+			 if (pm_crouchheight.GetFloat() == 38 && pfl.crouch)
+			 {
+				 pm_crouchheight.SetFloat(18);
+				 pm_crouchviewheight.SetFloat(12);
+				 pm_crouchspeed.SetFloat(50);
+				 break;
+			 }
+			 else
+			 {
+				 pm_crouchheight.SetFloat(38);
+				 pm_crouchviewheight.SetFloat(32);
+				 pm_crouchspeed.SetFloat(100);
+				 break;
+			 }
+		}
 		case IMPULSE_17: {
  			if ( gameLocal.isClient || entityNumber == gameLocal.localClientNum ) {
  				gameLocal.mpGame.ToggleReady( );
@@ -8578,7 +8599,7 @@ void idPlayer::PerformImpulse( int impulse ) {
    			}
    			break;
    		}
-				//Tim C
+		//Tim C
 		
 		case IMPULSE_23: 
 		{	
@@ -8593,6 +8614,32 @@ void idPlayer::PerformImpulse( int impulse ) {
 				break;
 			}
 		}
+		//Tim C
+		case IMPULSE_24:
+		{
+						   physicsObj.resetJump();
+						   secondJump = true;
+						   break;
+		}
+
+		case IMPULSE_25:
+		{
+						   physicsObj.playerDive();
+						   break;
+		}
+
+		case IMPULSE_26:
+		{
+						   physicsObj.playerDodgeLeft();
+						   break;
+		}
+
+		case IMPULSE_27:
+		{
+						   physicsObj.playerDodgeRight();
+						   break;
+		}
+
 		case IMPULSE_28: {
  			if ( gameLocal.isClient || entityNumber == gameLocal.localClientNum ) {
  				gameLocal.mpGame.CastVote( gameLocal.localClientNum, true );
@@ -8609,6 +8656,11 @@ void idPlayer::PerformImpulse( int impulse ) {
 			idFuncRadioChatter::RepeatLast();
 			break;
 		}
+			//Tim C
+		case IMPULSE_52: {
+			sprintOn = true;
+			break;
+		}
 
 // RITUAL BEGIN
 // squirrel: Mode-agnostic buymenus
@@ -8623,7 +8675,6 @@ void idPlayer::PerformImpulse( int impulse ) {
 		case IMPULSE_108:	break; // Unused
 		case IMPULSE_109:	AttemptToBuyItem( "weapon_napalmgun" );				break;
 		case IMPULSE_110:	/* AttemptToBuyItem( "weapon_dmg" );*/				break;
-		case IMPULSE_111:	break; // Unused
 		case IMPULSE_112:	break; // Unused
 		case IMPULSE_113:	break; // Unused
 		case IMPULSE_114:	break; // Unused
@@ -8638,8 +8689,7 @@ void idPlayer::PerformImpulse( int impulse ) {
 		case IMPULSE_123:	AttemptToBuyItem( "ammo_regen" );					break;
 		case IMPULSE_124:	AttemptToBuyItem( "health_regen" );					break;
 		case IMPULSE_125:	AttemptToBuyItem( "damage_boost" );					break;
-		case IMPULSE_126:	break; // Unused
-		case IMPULSE_127:	break; // Unused
+
 // RITUAL END
 
 		case IMPULSE_50: {
@@ -8651,6 +8701,7 @@ void idPlayer::PerformImpulse( int impulse ) {
  			LastWeapon();
  			break;
  		}
+
 	} 
 
 //RAVEN BEGIN
@@ -9728,6 +9779,27 @@ void idPlayer::Think( void ) {
 			fxTimer = 500;
 		}
 	}
+	if (pfl.jump == physicsObj.HasJumped() && secondJump)
+	{
+		physicsObj.resetJump();
+		pfl.onGround = 0;
+		pfl.jump = 0;
+		
+	}
+	secondJump = false;
+	physicsObj.updateDodgeTimer();
+	physicsObj.updatePlayerEnergy();
+	if (sprintOn)
+	{
+		physicsObj.playerSprint();
+	}
+	if (!pfl.crouch &&  pm_crouchheight.GetFloat() == 18)
+	{
+		pm_crouchheight.SetFloat(38);
+		pm_crouchviewheight.SetFloat(32);
+		pm_crouchspeed.SetFloat(100);
+	}
+
 }
 
 /*

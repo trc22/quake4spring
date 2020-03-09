@@ -44,6 +44,12 @@ const int PMF_TIME_WATERJUMP	= 128;		// movementTime is waterjump
 const int PMF_ALL_TIMES			= (PMF_TIME_WATERJUMP|PMF_TIME_LAND|PMF_TIME_KNOCKBACK);
 
 int c_pmove = 0;
+//Tim C
+int jumpCount = 0;
+int dodgeTimer = 0;
+int playerEnergy = 100;
+int energyTimer = 0;
+bool sprintActive = false;
 
 float idPhysics_Player::Pm_Accelerate( void ) {
 	return gameLocal.IsMultiplayer() ? PM_ACCELERATE_MP : PM_ACCELERATE_SP;
@@ -1318,7 +1324,7 @@ bool idPhysics_Player::CheckWaterJump( void ) {
 	if ( current.movementTime ) {
 		return false;
 	}
-
+	
 	// check for water jump
 	if ( waterLevel != WATERLEVEL_WAIST ) {
 		return false;
@@ -1615,6 +1621,133 @@ bool idPhysics_Player::HasJumped( void ) const {
 	return ( ( current.movementFlags & PMF_JUMPED ) != 0 );
 }
 
+//Tim C
+/*
+================
+idPhysics_Player::resetJump
+================
+*/
+void idPhysics_Player::resetJump(void)  {
+	idVec3 addVelocity;
+	if (jumpCount == 0)
+	{
+		addVelocity = 2.0f * maxJumpHeight * -gravityVector;
+		addVelocity *= idMath::Sqrt(addVelocity.Normalize());
+		current.velocity += addVelocity;
+	}
+	jumpCount++;
+	if (groundPlane)
+	{
+		jumpCount = 0;
+	}
+}
+/*
+================
+idPhysics_Player::playerDive
+================
+*/
+void idPhysics_Player::playerDive(void)  {
+	if (groundPlane)
+	{
+		current.velocity = 600 * viewForward - 250.0f * gravityNormal;
+		groundPlane = false;		
+		walking = false;
+		current.movementFlags |= PMF_JUMP_HELD | PMF_JUMPED;
+		current.crouchSlideTime = 5000;
+
+	}
+}
+
+/*
+================
+idPhysics_Player::playerDodgeLeft
+================
+*/
+void idPhysics_Player::playerDodgeLeft(void)  {
+	if (dodgeTimer == 25)
+	{
+		groundPlane = false;		// jumping away
+		walking = false;
+		current.velocity = 600 * -viewRight - 75.0f * gravityNormal;
+		dodgeTimer = 0;
+	}
+}
+
+/*
+================
+idPhysics_Player::playerDodgeRight
+================
+*/
+void idPhysics_Player::playerDodgeRight(void)  {
+	if (dodgeTimer == 25)
+	{
+		groundPlane = false;		// jumping away
+		walking = false;
+		current.velocity = 600 * viewRight - 75.0f * gravityNormal;
+		dodgeTimer = 0;
+	}
+}
+
+/*
+================
+idPhysics_Player::updateDodgeTimer
+================
+*/
+void idPhysics_Player::updateDodgeTimer(void)  {
+	if (dodgeTimer < 25)
+	{
+		dodgeTimer++;
+	}
+}
+
+/*
+================
+idPhysics_Player::playerSprint
+================
+*/
+void idPhysics_Player::playerSprint(void)  {
+	if (playerEnergy > 20)
+	{
+		sprintActive = true;
+		pm_speed.SetFloat(400);
+		updatePlayerEnergy();
+	}
+	else
+	{
+		sprintActive = false;
+		pm_speed.SetFloat(160);
+		updatePlayerEnergy();
+	}
+}
+
+/*
+================
+idPhysics_Player::updatePlayerEnergy
+================
+*/
+void idPhysics_Player::updatePlayerEnergy(void)  {
+	if (sprintActive)
+	{
+		energyTimer++;
+		if (energyTimer == 5)
+		{
+			playerEnergy -= 2;
+			energyTimer = 0;
+		}
+	}
+	else if (playerEnergy < 200)
+	{
+		energyTimer++;
+		if (energyTimer == 5)
+		{
+			playerEnergy++;
+			energyTimer = 0;
+		}
+
+	}
+
+}
+//TC end
 /*
 ================
 idPhysics_Player::HasSteppedUp

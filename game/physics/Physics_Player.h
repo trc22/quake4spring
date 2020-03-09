@@ -73,6 +73,15 @@ public:
 	waterLevel_t			GetWaterLevel( void ) const;
 	int						GetWaterType( void ) const;
 	bool					HasJumped( void ) const;
+	//Tim C
+	void					resetJump(void);
+	void					playerDive(void);
+	void					playerDodgeLeft(void);
+	void					playerDodgeRight(void);
+	void					updateDodgeTimer(void);
+	void					playerSprint(void);
+	void					updatePlayerEnergy(void);
+	//Tim C end
 	bool					HasSteppedUp( void ) const;
 	float					GetStepUp( void ) const;
 	bool					IsCrouching( void ) const;
