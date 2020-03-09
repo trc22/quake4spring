@@ -22,6 +22,7 @@ protected:
 
 	float				spreadZoom;
 	bool				fireHeld;
+	int					attackCount; //Tim C
 
 	bool				UpdateFlashlight	( void );
 	void				Flashlight			( bool on );
@@ -169,6 +170,7 @@ stateResult_t rvWeaponMachinegun::State_Idle( const stateParms_t& parms ) {
 	};	
 	switch ( parms.stage ) {
 		case STAGE_INIT:
+			attackCount = 3;
 			if ( !AmmoAvailable ( ) ) {
 				SetStatus ( WP_OUTOFAMMO );
 			} else {
@@ -178,7 +180,8 @@ stateResult_t rvWeaponMachinegun::State_Idle( const stateParms_t& parms ) {
 			PlayCycle( ANIMCHANNEL_ALL, "idle", parms.blendFrames );
 			return SRESULT_STAGE ( STAGE_WAIT );
 		
-		case STAGE_WAIT:			
+		case STAGE_WAIT:
+			attackCount = 3;
 			if ( wsfl.lowerWeapon ) {
 				SetState ( "Lower", 4 );
 				return SRESULT_DONE;
@@ -231,8 +234,17 @@ stateResult_t rvWeaponMachinegun::State_Fire ( const stateParms_t& parms ) {
 				Attack ( true, 1, spreadZoom, 0, 1.0f );
 				fireHeld = true;
 			} else {
-				nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));
-				Attack ( false, 1, spread, 0, 1.0f );
+				if (attackCount == 0)
+				{
+					nextAttackTime = gameLocal.time + 250;
+				}
+				else
+				{
+					nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier(PMOD_FIRERATE));
+					Attack(false, 1, spread, 0, 1.0f);
+					attackCount--;
+				}
+
 			}
 			PlayAnim ( ANIMCHANNEL_ALL, "fire", 0 );	
 			return SRESULT_STAGE ( STAGE_WAIT );
