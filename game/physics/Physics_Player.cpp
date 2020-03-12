@@ -1664,7 +1664,7 @@ idPhysics_Player::playerDodgeLeft
 ================
 */
 void idPhysics_Player::playerDodgeLeft(void)  {
-	if (dodgeTimer == 25)
+	if (dodgeTimer == 25 && groundPlane)
 	{
 		groundPlane = false;		// jumping away
 		walking = false;
@@ -1679,7 +1679,7 @@ idPhysics_Player::playerDodgeRight
 ================
 */
 void idPhysics_Player::playerDodgeRight(void)  {
-	if (dodgeTimer == 25)
+	if (dodgeTimer == 25 && groundPlane)
 	{
 		groundPlane = false;		// jumping away
 		walking = false;

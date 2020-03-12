@@ -1351,7 +1351,7 @@ idPlayer::idPlayer() {
 	slowMoActive = false;
 	decTimer = 1;
 	incTimer = 100;
-	fxTimer = 500;
+	fxTimer = 1000;
 	pillsActive = false;
 }
 
@@ -9769,14 +9769,14 @@ void idPlayer::Think( void ) {
 
 	if (pillsActive)
 	{
-		playerView.SetDoubleVisionParms(12, 2);
-		playerView.SetTunnelParms(10, 1);
+		playerView.SetDoubleVisionParms(20, 10);
+		playerView.SetTunnelParms(20, 0.75);
 		fxTimer--;
 		if (fxTimer == 0)
 		{
 			pillsActive = false;
 			playerView.ClearEffects();
-			fxTimer = 500;
+			fxTimer = 1000;
 		}
 	}
 	if (pfl.jump == physicsObj.HasJumped() && secondJump)
